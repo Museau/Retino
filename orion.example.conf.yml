@@ -1,0 +1,46 @@
+experiment_name: 'orion#exp.name'
+config_uid: 'orion#trial.id'
+seed: 1234
+cuda:
+  deterministic: false
+  benchmark: true
+dataset:
+  resolution: 512
+  name: kaggle2015
+  sample_size: -1
+  use_both_eyes: false
+  target_name: screening_level
+  feature_scaling: MaskedStandardization
+  train:
+    n_views: 1
+    augmentation:
+      apply_prob: 'orion~choices([0.5, 0.75, 1.0])'
+      rotation_type: 'orion~choices(["RightAngle", "Any"])'
+      different_transform_per_view: true
+    batch_size: 32
+    num_workers: 8
+  eval:
+    n_views: 1
+    apply_train_augmentations: false
+    batch_size: 64
+    num_workers: 8
+model:
+  pretrain: ''
+  dropout_rate: 'orion~choices([0.0, 0.2, 0.5])'
+  base:
+    name: cnn4layers2conv
+    norm_layer:
+      name: BatchNorm2d
+optimizer:
+  name: Adam
+  lr: 'orion~loguniform(1e-4, 1e-3, precision=1)'
+loss:
+  name: BinaryFocalLoss
+training:
+  max_epochs: 300
+  max_patience: 30
+  # First patience metric in the list will be used as hyperparameter search criterion
+  patience_metrics: ['quadratic_weighted_kappa']
+  log_grad_every_n_epoch: 0
+  log_image_sample_every_n_epoch: 0
+  exact_train_stats: false

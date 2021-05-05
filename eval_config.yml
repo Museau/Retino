@@ -1,0 +1,20 @@
+
+"""
+This is an example of dataset test config file. It should not be used as it is.
+"""
+
+name: kaggle2015
+sample_size: 10000
+train:
+  n_views: 1
+  # Only used if eval.apply_train_augmentation is true
+  augmentation:
+    apply_prob: 1.0
+    rotation_type: RightAngle
+    resized_crop: false
+    different_transform_per_view: false
+eval:
+  n_views: 3
+  apply_train_augmentations: true
+  batch_size: 10
+  num_workers: 2

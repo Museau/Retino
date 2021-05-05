@@ -1,0 +1,63 @@
+
+"""
+This is an example of config file. It should not be used as it is.
+"""
+experiment_name: retinopathy_kaggle
+seed: 1234
+cuda:
+  deterministic: false
+  benchmark: true
+dataset:
+  resolution: 512
+  name: kaggle2015
+  sample_size: 10
+  use_both_eyes: false
+  target_name: screening_level
+  feature_scaling: MaskedStandardization
+  train:
+    n_views : 1
+    filter_target: false
+    augmentation:
+      apply_prob: 0.0
+      rotation_type: RightAngle
+      resized_crop: false
+      different_transform_per_view: false
+    batch_size: 10
+    accumulated_batch_size: 10
+    num_workers: 2
+    under_sampling:
+      schedule: "[1, 2, 3]"
+      ratios: "[[0.5, 0.5], [0.7, 0.3], None]"
+  eval:
+    n_views: 1
+    apply_train_augmentations: false
+    batch_size: 10
+    num_workers: 2
+model:
+  pretrain: ''
+  dropout_rate: 0.0
+  base:
+    name: cnn4layers2conv
+    norm_layer:
+      name: BatchNorm2d
+      momentum: 0.0
+loss:
+  name: BCEWithLogitsLoss
+  pos_weight: [4]
+optimizer:
+  name: SGD
+  lr: 0.001
+  momentum: 0.0
+  weight_decay:
+    type: All
+    rate: 0.001
+lr_scheduler:
+  name: StepLR
+  step_size: 1
+training:
+  max_epochs: 10
+  max_patience: 2
+  patience_metrics: ['quadratic_weighted_kappa']
+  log_grad_every_n_epoch: 1
+  log_image_sample_every_n_epoch: 10
+  exact_train_stats: true
