@@ -1,0 +1,15 @@
+storage:
+  database:
+    host: retinodb.pkl
+    type: pickleddb
+experiment:
+  algorithms:
+    random:
+      seed: 1234
+  max_broken: 100
+worker:
+  heartbeat: 300
+  max_idle_time: 600
+evc:
+  non_monitored_arguments: ['data-folder', 'experiment-folder']
+  ignore_code_changes: True

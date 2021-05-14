@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Running tests in pre-push mostly make sense when you don't have that many.
+# We might need to reconsider later.
+
+# Stop at first failed test
+pytest -x
